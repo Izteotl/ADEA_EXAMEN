@@ -1,0 +1,23 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h2>Actualizar Password</h2>
+      <mat-error *ngIf="resetInvalid">
+        Los datos no coinciden
+      </mat-error>
+      <mat-form-field class="full-width-input" color ="warn">
+        <input matInput type="password" placeholder="New Password" formControlName="newPassword" required>
+        <mat-error>
+          Favor de proporcionar un password valido
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input" color ="warn">
+        <input matInput type="password" placeholder="Password" formControlName="confirPassword" required>
+        <mat-error>
+          Favor de proporcionar un password valido
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="warn">Actualizar</button>
+    </form>
+  </mat-card-content>
+</mat-card>
