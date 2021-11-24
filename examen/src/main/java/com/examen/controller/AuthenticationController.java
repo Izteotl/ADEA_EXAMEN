@@ -56,14 +56,34 @@ public class AuthenticationController {
 		return ResponseEntity.ok(new AuthenticationResponse(jwt,false));
 	}
 	
-	@RequestMapping(value = "/reset", method = RequestMethod.POST)
+	@RequestMapping(value = "/reset", method = RequestMethod.POST, produces = { "application/json" })
 	public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest){
 		int respuesta = usuarioService.updatePassword(updatePasswordRequest);
 		if(respuesta ==1 ) {
-			return ResponseEntity.ok("success");
+			return ResponseEntity.ok(new ResponseUpdate("true"));
 		}else {
-			return ResponseEntity.internalServerError().body("fail");
+			return ResponseEntity.internalServerError().body(new ResponseUpdate("fail"));
 		}
+		
+	}
+	
+	public static class ResponseUpdate {
+		private String status;
+		
+
+		public ResponseUpdate(String status) {
+			super();
+			this.status = status;
+		}
+
+		public String getStatus() {
+			return status;
+		}
+
+		public void setStatus(String status) {
+			this.status = status;
+		}
+		
 		
 	}
 }

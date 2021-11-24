@@ -20,13 +20,13 @@ export class InterceptorService implements HttpInterceptor {
         if( isToken ){
             req = req.clone({
                 setHeaders:{
-                   'x-token-cace': isToken
+                   'Autorization': "Bearer " + isToken
                 }
             });
         }
        
-        //console.log("Interceptor => ", req.url );
-        //console.log(req);
+        console.log("Interceptor => ", req.url );
+        console.log(req);
         const requestLogin = req;
         return next.handle( requestLogin ).pipe(
             catchError( ( err:HttpErrorResponse ) => {

@@ -25,13 +25,9 @@ export class ResetComponent implements OnInit {
 
   ngOnInit() {
     const tokenID = sessionStorage.getItem('tokenID');
-    const userM   = sessionStorage.getItem('username');
-    
+    this.user   = sessionStorage.getItem('username');
     if( !tokenID ){
       this.router.navigateByUrl('/login');
-    }
-    if(!userM){
-      this.user = JSON.parse(userM);
     }
     this.form = this.fb.group({
       newPassword : ['',Validators.required],
@@ -43,18 +39,17 @@ export class ResetComponent implements OnInit {
     if( this.form.invalid ){
 
     }else{
+      console.log(this.form.value.newPassword);
       const dataUser =  {
-        username: this.form.value.username,
-        password: btoa(this.form.value.password)
+        username: this.user,
+        newPassword: btoa(this.form.value.newPassword)
       };
 
       if(this.form.value.newPassword === this.form.value.confirPassword){
         this.resetService.postReset(dataUser).subscribe( res => {
           console.log('onSubmit() => postLogin() => SUCCESS ');
           console.log( res );
-          sessionStorage.setItem("tokenID",res.token);
-          sessionStorage.setItem("rol",res.user.rol);
-          this.router.navigateByUrl('/principal');
+          this.router.navigateByUrl('/home');
         }, err => {
           console.log('onSubmit() => postLogin() => FAIL ');
           console.log( err );
